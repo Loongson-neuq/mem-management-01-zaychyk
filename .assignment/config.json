@@ -1,0 +1,21 @@
+{
+  "name": "第三次作业",
+  "description": "第三次作业",
+  "type": "OS",
+  "status": "open",
+  "id": "week-3",
+  "version": 1,
+  "config_version": 1,
+  "auto_grade": {
+    "enable": false,
+    "upload_output": true,
+    "steps": [
+      {
+        "title": "Step 1",
+        "timeout": 60,
+        "command": "echo 'Hello, World!'",
+        "score": 100
+      }
+    ]
+  }
+}

@@ -1,0 +1,35 @@
+name: Submit Assignment
+
+on: [push, workflow_dispatch]
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  submit:
+    runs-on: ubuntu-latest
+    env:
+        URL: "https://github.com/Loongson-neuq/LoongsonNeuq/releases/download/assignment-submit-release/AssignmentSubmit.AppImage"
+        SAVE_PATH: "AssignmentSubmit.AppImage"
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Download AssignmentSubmit Binary
+      run: wget ${{ env.URL }} -O ${{ env.SAVE_PATH }}
+
+    - name: Grant Permission
+      run: chmod +x ${{ env.SAVE_PATH }}
+
+    # AppImage requires libfuse2 to run, install it costs a lot of time
+    - name: Extract Binary
+      run: ./${{ env.SAVE_PATH }} --appimage-extract
+
+    - name: Grant Permission to Extracted Binary
+      run: chmod +x ./squashfs-root/AppRun
+
+    - name: Submit Assignment
+      run: ./squashfs-root/AppRun
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
